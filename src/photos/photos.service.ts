@@ -13,12 +13,14 @@ export class PhotosService {
         this.uploadImageToCloudinary(file).then(response => {
             const newPhoto = new this.photoModel({"photoURL": response.secure_url})
             newPhoto.save();
+            console.log("Photo inserted in the database");
         });   
     }
 
     async uploadImageToCloudinary(@UploadedFile() file) {
         return await this.cloudinaryService.uploadImage(file).catch(() => {
-          throw new BadRequestException('Invalid file type.');
+            console.log("Invalid file type.");
+            throw new BadRequestException('Invalid file type.');
         });
     }
 
